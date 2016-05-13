@@ -7,6 +7,9 @@ import {mapUrl} from 'utils/url.js';
 import PrettyError from 'pretty-error';
 import http from 'http';
 import SocketIo from 'socket.io';
+import passport from 'passport';
+import FacebookPassport from 'passport-facebook';
+const FacebookStrategy = FacebookPassport.Strategy;
 
 const pretty = new PrettyError();
 const app = express();
@@ -24,8 +27,61 @@ app.use(session({
 }));
 app.use(bodyParser.json());
 
+/** Passport: Start */
+// Configure the Facebook strategy for use by Passport.
+//
+// OAuth 2.0-based strategies require a `verify` function which receives the
+// credential (`accessToken`) for accessing the Facebook API on the user's
+// behalf, along with the user's profile.  The function must invoke `cb`
+// with a user object, which will be set at `req.user` in route handlers after
+// authentication.
+passport.use(new FacebookStrategy({
+		clientID: config.auth.facebook.clientId,
+		clientSecret: config.auth.facebook.clientSecret,
+		callbackURL: `http://${config.host}:${config.port}/api/login/facebook/return`
+	},
+	(accessToken, refreshToken, profile, cb) => {
+		// In this example, the user's Facebook profile is supplied as the user
+		// record.  In a production-quality application, the Facebook profile should
+		// be associated with a user record in the application's database, which
+		// allows for account linking and authentication with other identity
+		// providers.
+		return cb(null, profile);
+	}));
 
-app.use((req, res) => {
+// Configure Passport authenticated session persistence.
+//
+// In order to restore authentication state across HTTP requests, Passport needs
+// to serialize users into and deserialize users out of the session.  In a
+// production-quality application, this would typically be as simple as
+// supplying the user ID when serializing, and querying the user record by ID
+// from the database when deserializing.  However, due to the fact that this
+// example does not have a database, the complete Twitter profile is serialized
+// and deserialized.
+passport.serializeUser((user, cb) => {
+	cb(null, user);
+});
+
+passport.deserializeUser((obj, cb) => {
+	cb(null, obj);
+});
+
+// Initialize Passport and restore authentication state, if any, from the
+// session.
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.get('/login/facebook',
+	passport.authenticate('facebook'));
+
+app.get('/login/facebook/return',
+	passport.authenticate('facebook', {
+		successRedirect: `http://${config.host}:${config.port}/loginSuccess`,
+		failureRedirect: '/login'
+	}));
+/** Password: End */
+
+app.use((req, res, next) => {
 	const splittedUrlPath = req.url.split('?')[0].split('/').slice(1);
 
 	const {action, params} = mapUrl(actions, splittedUrlPath);
@@ -34,11 +90,12 @@ app.use((req, res) => {
 		action(req, params)
 			.then((result) => {
 				if (result instanceof Function) {
-					result(res);
+					result(res, next);
 				} else {
 					res.json(result);
 				}
-			}, (reason) => {
+			})
+			.catch((reason) => {
 				if (reason && reason.redirect) {
 					res.redirect(reason.redirect);
 				} else {

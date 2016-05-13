@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+/* eslint-disable */
 require('../server.babel'); // babel registration (runtime transpilation for node)
 var path = require('path');
 var rootDir = path.resolve(__dirname, '..');
@@ -11,18 +12,19 @@ global.__DISABLE_SSR__ = false;  // <----- DISABLES SERVER SIDE RENDERING FOR ER
 global.__DEVELOPMENT__ = process.env.NODE_ENV !== 'production';
 
 if (__DEVELOPMENT__) {
-  if (!require('piping')({
-      hook: true,
-      ignore: /(\/\.|~$|\.json|\.scss$)/i
-    })) {
-    return;
-  }
+	// https://www.npmjs.com/package/piping
+	if (!require('piping')({
+			hook: true,
+			ignore: /(\/\.|~$|\.json|\.scss$)/i
+		})) {
+		return;
+	}
+	console.log('Restarting server');
 }
-
 // https://github.com/halt-hammerzeit/webpack-isomorphic-tools
 var WebpackIsomorphicTools = require('webpack-isomorphic-tools');
 global.webpackIsomorphicTools = new WebpackIsomorphicTools(require('../webpack/webpack-isomorphic-tools'))
-  .development(__DEVELOPMENT__)
-  .server(rootDir, function() {
-    require('../src/server');
-  });
+	.development(__DEVELOPMENT__)
+	.server(rootDir, function() {
+		require('../src/server');
+	});
