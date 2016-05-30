@@ -1,3 +1,4 @@
+/* eslint-disable */
 require('babel-polyfill');
 
 // Webpack config for creating the production bundle.

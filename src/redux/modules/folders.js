@@ -1,13 +1,14 @@
-const LOAD = 'redux-example/widgets/LOAD';
-const LOAD_SUCCESS = 'redux-example/widgets/LOAD_SUCCESS';
-const LOAD_FAIL = 'redux-example/widgets/LOAD_FAIL';
-const EDIT_START = 'redux-example/widgets/EDIT_START';
-const EDIT_STOP = 'redux-example/widgets/EDIT_STOP';
-const SAVE = 'redux-example/widgets/SAVE';
-const SAVE_SUCCESS = 'redux-example/widgets/SAVE_SUCCESS';
-const SAVE_FAIL = 'redux-example/widgets/SAVE_FAIL';
+const LOAD = 'redux-example/folders/LOAD';
+const LOAD_SUCCESS = 'redux-example/folders/LOAD_SUCCESS';
+const LOAD_FAIL = 'redux-example/folders/LOAD_FAIL';
+const EDIT_START = 'redux-example/folders/EDIT_START';
+const EDIT_STOP = 'redux-example/folders/EDIT_STOP';
+const SAVE = 'redux-example/folders/SAVE';
+const SAVE_SUCCESS = 'redux-example/folders/SAVE_SUCCESS';
+const SAVE_FAIL = 'redux-example/folders/SAVE_FAIL';
 
 const initialState = {
+	data: [],
 	loaded: false,
 	editing: {},
 	saveError: {}
@@ -55,8 +56,7 @@ export default function reducer(state = initialState, action = {}) {
 		case SAVE:
 			return state; // 'saving' flag handled by redux-form
 		case SAVE_SUCCESS:
-			const data = [...state.data];
-			data[action.result.id - 1] = action.result;
+			const data = [...state.data, action.result];
 			return {
 				...state,
 				data: data,
@@ -83,22 +83,22 @@ export default function reducer(state = initialState, action = {}) {
 }
 
 export function isLoaded(globalState) {
-	return globalState.widgets && globalState.widgets.loaded;
+	return globalState.folders && globalState.folders.loaded;
 }
 
 export function load() {
 	return {
 		types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
-		promise: (client) => client.get('/widget/load/param1/param2') // params not used, just shown as demonstration
+		promise: (client) => client.get('/folder')
 	};
 }
 
-export function save(widget) {
+export function save(folder) {
 	return {
 		types: [SAVE, SAVE_SUCCESS, SAVE_FAIL],
-		id: widget.id,
-		promise: (client) => client.post('/widget/update', {
-			data: widget
+		// id: folder.id,
+		promise: (client) => client.post('/folder', {
+			data: folder
 		})
 	};
 }
@@ -110,3 +110,4 @@ export function editStart(id) {
 export function editStop(id) {
 	return { type: EDIT_STOP, id };
 }
+

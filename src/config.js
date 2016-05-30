@@ -15,7 +15,7 @@ module.exports = Object.assign({
 	apiHost: process.env.APIHOST || 'localhost',
 	apiPort: process.env.APIPORT,
 	app: {
-		title: 'Chu Hoang Son React Redux Example',
+		title: 'SpeedVocab',
 		description: 'All the modern best practices in one example.',
 		head: {
 			titleTemplate: 'React Redux Example: %s',
@@ -39,6 +39,15 @@ module.exports = Object.assign({
 		facebook: {
 			clientId: '446558085519275',
 			clientSecret: 'bacc127ffc433bba8475459dd469334c'
+		},
+		quizlet: {
+			clientId: 'U9zGqgKByB',
+			clientSecret: 'gceUm37RfjkgeQw6nJuQKj',
+			redirectUri: 'http://' + (process.env.HOST || 'localhost') + ':' + (process.env.PORT || 3000) + '/loginQuizletSuccess'
 		}
+	},
+	mongo: {
+		// endpoint: 'mongodb://admin:admin@ds011369.mlab.com:11369/speedvocab2'
+		endpoint: 'mongodb://localhost:27017/speedvocab2'
 	}
 }, environment);

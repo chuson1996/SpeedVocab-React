@@ -1,3 +1,4 @@
+// import config from '../../config';
 const LOAD = 'redux-example/auth/LOAD';
 const LOAD_SUCCESS = 'redux-example/auth/LOAD_SUCCESS';
 const LOAD_FAIL = 'redux-example/auth/LOAD_FAIL';
@@ -90,6 +91,17 @@ export function login(name) {
 		promise: (client) => client.post('/login', {
 			data: {
 				name: name
+			}
+		})
+	};
+}
+
+export function quizletLogin(code) {
+	return {
+		types: [LOGIN, LOGIN_SUCCESS, LOGIN_FAIL],
+		promise: (client) => client.post('/loadQuizletAuth', {
+			data: {
+				code
 			}
 		})
 	};

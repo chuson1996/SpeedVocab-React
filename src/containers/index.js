@@ -7,3 +7,6 @@ export Login from './Login/Login';
 export LoginSuccess from './LoginSuccess/LoginSuccess';
 export Survey from './Survey/Survey';
 export NotFound from './NotFound/NotFound';
+export QuizletLoginSuccess from './QuizletLoginSuccess/QuizletLoginSuccess';
+export Sets from './Sets/Sets';
+export Terms from './Terms/Terms';

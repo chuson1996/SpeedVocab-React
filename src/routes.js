@@ -1,16 +1,19 @@
 import React from 'react';
-import {IndexRoute, Route} from 'react-router';
+import {IndexRoute, Route, Redirect} from 'react-router';
 import { isLoaded as isAuthLoaded, load as loadAuth } from 'redux/modules/auth';
 import {
 		App,
-		Chat,
+		// Chat,
 		Home,
-		Widgets,
+		// Widgets,
 		About,
 		Login,
-		LoginSuccess,
-		Survey,
+		// LoginSuccess,
+		// Survey,
 		NotFound,
+		QuizletLoginSuccess,
+		Sets,
+		Terms
 	} from 'containers';
 
 export default (store) => {
@@ -41,15 +44,19 @@ export default (store) => {
 
 			{ /* Routes requiring login */ }
 			<Route onEnter={requireLogin}>
-				<Route path="chat" component={Chat}/>
-				<Route path="loginSuccess" component={LoginSuccess}/>
+				{ /* <Route path="chat" component={Chat}/> */ }
+				<Redirect from="loginSuccess" to="sets"/>
+				{ /* <Route path="loginSuccess" component={LoginSuccess}/> */}
+				<Route path="sets" component={Sets}/>
+				<Route path="sets/:setId" component={Terms}/>
 			</Route>
 
 			{ /* Routes */ }
 			<Route path="about" component={About}/>
 			<Route path="login" component={Login}/>
-			<Route path="survey" component={Survey}/>
-			<Route path="widgets" component={Widgets}/>
+			<Route path="loginQuizletSuccess" component={QuizletLoginSuccess}/>
+			{ /* <Route path="survey" component={Survey}/> */ }
+			{ /* <Route path="widgets" component={Widgets}/> */ }
 
 			{ /* Catch all route */ }
 			<Route path="*" component={NotFound} status={404} />
