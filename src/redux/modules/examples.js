@@ -1,9 +1,10 @@
-const LOAD = 'redux-example/sets/LOAD';
-const LOAD_SUCCESS = 'redux-example/sets/LOAD_SUCCESS';
-const LOAD_FAIL = 'redux-example/sets/LOAD_FAIL';
+const LOAD = 'redux-example/examples/LOAD';
+const LOAD_SUCCESS = 'redux-example/examples/LOAD_SUCCESS';
+const LOAD_FAIL = 'redux-example/examples/LOAD_FAIL';
 
 const initialState = {
-	loaded: false
+	data: {},
+	loaded: false,
 };
 
 export default function reducer(state = initialState, action = {}) {
@@ -34,17 +35,9 @@ export default function reducer(state = initialState, action = {}) {
 	}
 }
 
-export function isLoaded(globalState) {
-	return globalState.sets && globalState.sets.loaded;
-}
-
-export function load(userId, accessToken) {
+export function getExamples(word) {
 	return {
 		types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
-		promise: (client) => client.get(`/quizlet/users/${userId}/sets?whitespace=1`, {
-			headers: {
-				Authorization: `Bearer ${accessToken}`
-			}
-		})
+		promise: (client) => client.get(`/examples/${word}`)
 	};
 }

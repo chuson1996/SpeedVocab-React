@@ -5,9 +5,6 @@ import { connect } from 'react-redux';
 import {reduxForm} from 'redux-form';
 import {bindActionCreators} from 'redux';
 import * as folderActions from 'redux/modules/folders';
-import ApiClient from 'helpers/ApiClient';
-
-const client = new ApiClient();
 
 @connect(
 	state => ({
@@ -31,13 +28,6 @@ export default class AddNewFolderForm extends Component {
 		saveError: PropTypes.object,
 		userId: PropTypes.string,
 		accessToken: PropTypes.string,
-	};
-
-	getUsers = () => {
-		client.get(`/quizlet/users/${this.props.userId}?access_token=${this.props.accessToken}&whitespace=1`)
-			.then((res) => {
-				console.log(res);
-			});
 	};
 
 	render() {

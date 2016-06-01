@@ -1,0 +1,18 @@
+.editButton {
+	color: #5cb85c;
+	& > span.editSpan {
+		display: inline-block;
+		opacity: 0;
+		margin-left: 5px;
+		transform: translateX(-20px);
+		transition: transform .3s ease-in-out, opacity .3s ease-in-out;
+	}
+
+	&:hover {
+		& > span.editSpan {
+			// display: inline-block;
+			opacity: 1;
+			transform: translate(0,0);
+		}
+	}
+}

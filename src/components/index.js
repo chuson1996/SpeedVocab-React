@@ -14,3 +14,7 @@ export WidgetForm from './WidgetForm/WidgetForm';
 export AddNewFolderForm from './AddNewFolderForm/AddNewFolderForm';
 export FolderCard from './FolderCard/FolderCard';
 export WordCard from './WordCard/WordCard';
+export EditButton from './EditButton/EditButton';
+export EditTermModal from './EditTermModal/EditTermModal';
+export AddNewTermForm from './AddNewTermForm/AddNewTermForm';
+export DefAndExCard from './DefAndExCard/DefAndExCard';

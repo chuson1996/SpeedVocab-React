@@ -15,9 +15,10 @@
     "import/no-named-as-default": 2,
     "comma-dangle": 0,  // not sure why airbnb turned this on. gross!
     "indent": 0,
-    "no-console": 0,
     "no-alert": 0,
-    "no-unused-vars": 1
+    "no-unused-vars": 1,
+    "id-length": 0,
+    "no-console": 0
   },
   "plugins": [
     "react", "import"

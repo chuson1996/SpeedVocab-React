@@ -10,19 +10,28 @@ import info from './info';
 import widgets from './widgets';
 import sets from './sets';
 import terms from './terms';
+import definitions from './definitions';
+import examples from './examples';
+
+// Form plugins
+import newTermFormPlugin from './addNewTermForm';
 
 export default combineReducers({
-  routing: routerReducer,
-  reduxAsyncConnect,
-  auth,
-  form,
-  multireducer: multireducer({
-    counter1: counter,
-    counter2: counter,
-    counter3: counter
-  }),
-  info,
-  widgets,
-  sets,
-  terms,
+	routing: routerReducer,
+	reduxAsyncConnect,
+	auth,
+	form: form.plugin({
+		newTerm: newTermFormPlugin
+	}),
+	multireducer: multireducer({
+		counter1: counter,
+		counter2: counter,
+		counter3: counter
+	}),
+	info,
+	widgets,
+	sets,
+	terms,
+	definitions,
+	examples,
 });

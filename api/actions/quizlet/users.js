@@ -1,23 +1,21 @@
-import request from 'request';
+import rp from 'request-promise';
 import jsonToHttpParams from '../../utils/jsonToHttpParams';
 
-export default function users(req, [username, detail]) {
-	return new Promise((resolve, reject) => {
-		console.log(req.query);
-		request.get(`https://api.quizlet.com/2.0/users/${username}${detail ? ('/' + detail) : ''}?${jsonToHttpParams(req.query)}`, {
-			headers: {
-				Authorization: req.headers.Authorization
-			}
-		}, (error, httpResponse, bodyString) => {
-			const body = JSON.parse(bodyString);
-			if (body.http_code === 400) {
-				return reject({
-					status: 400,
-					message: body
-				});
-			}
+export default function users(req, params) {
+	const _params = (params.length !== 0) ? `/${params.join('/')}` : '';
+	const uri = `https://api.quizlet.com/2.0/users${_params}?${jsonToHttpParams(req.query)}`;
+	const options = {
+		method: req.method,
+		uri,
+		json: true,
+		headers: {
+			Authorization: req.headers.authorization
+		}
+	};
 
-			return resolve(body);
-		});
-	});
+	if (req.method === 'POST') {
+		options.form = req.body;
+	}
+
+	return rp(options);
 }
