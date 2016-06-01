@@ -1,5 +1,4 @@
 import update from 'react-addons-update';
-import _ from 'lodash';
 
 const LOAD = 'redux-example/terms/LOAD';
 const LOAD_SUCCESS = 'redux-example/terms/LOAD_SUCCESS';
@@ -62,12 +61,9 @@ export default function reducer(state = initialState, action = {}) {
 		case SAVE:
 			return state; // 'saving' flag handled by redux-form
 		case SAVE_SUCCESS:
-			const index = _.findIndex(state.data.terms, (term) => term.id === action.result.id);
 			const data = update(state.data, {
 				terms: {
-					[index]: {
-						$set: action.result
-					}
+					$push: [action.result]
 				}
 			});
 
@@ -113,11 +109,14 @@ export function editStop() {
 	return { type: EDIT_STOP };
 }
 
-export function save(word, setId) {
+export function save(word, setId, accessToken) {
 	return {
 		types: [SAVE, SAVE_SUCCESS, SAVE_FAIL],
-		promise: (client) => client.post(`/quizlet/sets/${setId}`, {
-			data: word
+		promise: (client) => client.post(`/quizlet/sets/${setId}/terms`, {
+			data: word,
+			headers: {
+				Authorization: `Bearer ${accessToken}`
+			}
 		})
 	};
 }

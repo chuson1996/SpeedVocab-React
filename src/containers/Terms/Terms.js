@@ -10,6 +10,7 @@ import Helmet from 'react-helmet';
 import Grid from 'react-bootstrap/lib/Grid';
 import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
+import Button from 'react-bootstrap/lib/Button';
 import {bindActionCreators} from 'redux';
 import last from 'lodash/last';
 import {
@@ -36,17 +37,29 @@ import {
 		terms: state.terms.data,
 		loading: state.terms.loading,
 		editing: state.terms.editing,
+		accessToken: state.auth.user.access_token,
+		pathName: state.routing.locationBeforeTransitions.pathname,
 	}),
 	dispatch => bindActionCreators(termActions, dispatch)
 )
 export default class Terms extends Component {
 	static propTypes = {
+		// State 2 Props
 		terms: PropTypes.object,
 		loading: PropTypes.bool,
 		editing: PropTypes.object.isRequired,
+		accessToken: PropTypes.string,
+		pathName: PropTypes.string,
+		// Actions 2 Props
 		editStop: PropTypes.func.isRequired,
 		editStart: PropTypes.func.isRequired,
 		save: PropTypes.func.isRequired,
+		load: PropTypes.func.isRequired,
+	};
+
+	refresh = () => {
+		const { pathName, accessToken } = this.props;
+		this.props.load(extractParams('/sets/:setId', pathName).setId, accessToken);
 	};
 
 	render() {
@@ -57,19 +70,22 @@ export default class Terms extends Component {
 			// save,
 			loading,
 			editStart} = this.props;
+		const setId = (this.props.terms) ? this.props.terms.id : undefined;
 
 		return (<div>
 			<Helmet title="Terms"/>
 			<Grid>
 				<Row>
 					<Col xs={12}>
-						<AddNewTermForm/>
+						{ setId && <AddNewTermForm setId={setId}/>}
 					</Col>
 				</Row>
 				<Row>
-					<h1>Terms</h1>
+					<h1 style={{display: 'inline-block'}}>Terms</h1>
+					<Button bsStyle="info" onClick={this.refresh}>Refresh</Button>
+					<br/>
 					{loading && <h1>Loading!!!</h1>}
-					{!loading && words && words.map((word) => {
+					{!loading && words && words.reverse().map((word) => {
 						return (<WordCard
 							key={word.id}
 							word={word}

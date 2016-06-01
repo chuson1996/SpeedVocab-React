@@ -15,21 +15,27 @@ export default class DefAndExCard extends Component {
 			definitionsLoading, examplesLoading } = this.props;
 		return (
 			<Row>
-				{ definitions && !definitionsLoading
-				 && <Col md={6}>
-					<h2>Definitions: </h2>
-					{ definitions && definitions.map(({partOfSpeech, definition}, index) => {
-						return <p key={index}>{index + 1}. ({partOfSpeech}) {definition}</p>;
-					}) }
-				</Col> }
+				<Col md={6}>
+					{ definitionsLoading && <h3>Loading definitions...</h3> }
+					{ definitions && definitions.length && !definitionsLoading
+					 && <div>
+						<h2>Definitions: </h2>
+						{ definitions && definitions.map(({partOfSpeech, definition}, index) => {
+							return <p key={index}>{index + 1}. ({partOfSpeech}) {definition}</p>;
+						}) }
+					</div> }
+				</Col>
 
-				{ examples && !examplesLoading
-				 && <Col md={6}>
-					<h2>Examples: </h2>
-					{ examples.map((example, index) => {
-						return <p key={index}>{index + 1}. {example}</p>;
-					}) }
-				</Col> }
+				<Col md={6}>
+					{ examplesLoading && <h3>Loading examples...</h3> }
+					{ examples && examples.length && !examplesLoading
+					 && <div>
+						<h2>Examples: </h2>
+						{ examples.map((example, index) => {
+							return <p key={index}>{index + 1}. {example}</p>;
+						}) }
+					</div> }
+				</Col>
 			</Row>
 		);
 	}
