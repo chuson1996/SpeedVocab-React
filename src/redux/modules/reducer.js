@@ -12,6 +12,7 @@ import sets from './sets';
 import terms from './terms';
 import definitions from './definitions';
 import examples from './examples';
+import images from './images';
 
 // Form plugins
 import newTermFormPlugin from './addNewTermForm';
@@ -34,4 +35,5 @@ export default combineReducers({
 	terms,
 	definitions,
 	examples,
+	images,
 });

@@ -2,7 +2,7 @@
 import mongoose from 'mongoose';
 const termSchema = mongoose.Schema({
 	quizletTermId: String,
-	// quizletSetId: String,
-	note: String
+	setId: String,
+	imageSrc: String
 });
 export default mongoose.model('Term', termSchema);

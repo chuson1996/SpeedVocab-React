@@ -18,3 +18,4 @@ export EditButton from './EditButton/EditButton';
 export EditTermModal from './EditTermModal/EditTermModal';
 export AddNewTermForm from './AddNewTermForm/AddNewTermForm';
 export DefAndExCard from './DefAndExCard/DefAndExCard';
+export ImageSelect from './ImageSelect/ImageSelect';

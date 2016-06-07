@@ -11,6 +11,8 @@ import Grid from 'react-bootstrap/lib/Grid';
 import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
 import Button from 'react-bootstrap/lib/Button';
+import Glyphicon from 'react-bootstrap/lib/Glyphicon';
+import Jumbotron from 'react-bootstrap/lib/Jumbotron';
 import {bindActionCreators} from 'redux';
 import last from 'lodash/last';
 import {
@@ -75,15 +77,23 @@ export default class Terms extends Component {
 		return (<div>
 			<Helmet title="Terms"/>
 			<Grid>
+				<Jumbotron style={{backgroundColor: 'white'}}>
+					<Row>
+						<Col xs={12} md={8} mdOffset={2} lg={6} lgOffset={3}>
+							{ setId && <AddNewTermForm setId={setId}/>}
+						</Col>
+					</Row>
+				</Jumbotron>
+				<hr/>
 				<Row>
-					<Col xs={12}>
-						{ setId && <AddNewTermForm setId={setId}/>}
+					<Col xs={12} style={{textAlign: 'right'}}>
+						<Button onClick={this.refresh}>
+							<Glyphicon glyph="refresh"/>
+						</Button>
 					</Col>
 				</Row>
+				<br/>
 				<Row>
-					<h1 style={{display: 'inline-block'}}>Terms</h1>
-					<Button bsStyle="info" onClick={this.refresh}>Refresh</Button>
-					<br/>
 					{loading && <h1>Loading!!!</h1>}
 					{!loading && words && words.reverse().map((word) => {
 						return (<WordCard

@@ -17,7 +17,7 @@ export default class DefAndExCard extends Component {
 			<Row>
 				<Col md={6}>
 					{ definitionsLoading && <h3>Loading definitions...</h3> }
-					{ definitions && definitions.length && !definitionsLoading
+					{ definitions && !!definitions.length && !definitionsLoading
 					 && <div>
 						<h2>Definitions: </h2>
 						{ definitions && definitions.map(({partOfSpeech, definition}, index) => {
@@ -28,7 +28,7 @@ export default class DefAndExCard extends Component {
 
 				<Col md={6}>
 					{ examplesLoading && <h3>Loading examples...</h3> }
-					{ examples && examples.length && !examplesLoading
+					{ examples && !!examples.length && !examplesLoading
 					 && <div>
 						<h2>Examples: </h2>
 						{ examples.map((example, index) => {
