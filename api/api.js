@@ -7,13 +7,13 @@ import {mapUrl} from 'utils/url.js';
 import PrettyError from 'pretty-error';
 import http from 'http';
 import SocketIo from 'socket.io';
-import passport from 'passport';
-import FacebookPassport from 'passport-facebook';
+// import passport from 'passport';
+// import FacebookPassport from 'passport-facebook';
 import connect from 'connect';
 import sessionMongoose from 'session-mongoose';
 import mongoose from 'mongoose';
 
-const FacebookStrategy = FacebookPassport.Strategy;
+// const FacebookStrategy = FacebookPassport.Strategy;
 
 /** MongoDB Setup */
 mongoose.connect(config.mongo.endpoint, {

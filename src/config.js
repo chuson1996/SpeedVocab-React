@@ -47,7 +47,7 @@ module.exports = Object.assign({
 		}
 	},
 	mongo: {
-		// endpoint: 'mongodb://admin:admin@ds011369.mlab.com:11369/speedvocab2'
-		endpoint: 'mongodb://localhost:27017/speedvocab2'
+		endpoint: 'mongodb://admin:admin@ds011369.mlab.com:11369/speedvocab2'
+		// endpoint: 'mongodb://localhost:27017/speedvocab2'
 	}
 }, environment);
