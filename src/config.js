@@ -10,8 +10,8 @@ const environment = {
 }[process.env.NODE_ENV || 'development'];
 
 const websiteUrl = (process.env.NODE_ENV === 'development') ?
-	'http://chuson1996.herokuapp.com' :
-	(process.env.HOST || 'localhost') + ':' + (process.env.PORT || 3000);
+	(process.env.HOST || 'localhost') + ':' + (process.env.PORT || 3000) :
+	'http://chuson1996.herokuapp.com';
 
 module.exports = Object.assign({
 	host: process.env.HOST || 'localhost',

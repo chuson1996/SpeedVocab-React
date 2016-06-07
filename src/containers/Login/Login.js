@@ -24,8 +24,8 @@ export default class Login extends Component {
 	quizletLogin = () => {
 		const redirectUri = config.auth.quizlet.redirectUri;
 		const scope = ['read', 'write_set', 'write_group'].join(' ');
-			const clientId = config.auth.quizlet.clientId;
-		window.location.href = window.location.href = `https://quizlet.com/authorize?scope=${scope}&client_id=${clientId}&response_type=code&state=authenticated&redirect_uri=${redirectUri}`;
+		const clientId = config.auth.quizlet.clientId;
+		window.location.href = `https://quizlet.com/authorize?scope=${scope}&client_id=${clientId}&response_type=code&state=authenticated&redirect_uri=${redirectUri}`;
 	}
 
 	render() {
