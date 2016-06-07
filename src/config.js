@@ -9,6 +9,10 @@ const environment = {
 	}
 }[process.env.NODE_ENV || 'development'];
 
+const websiteUrl = (process.env.NODE_ENV === 'development') ?
+	'http://chuson1996.herokuapp.com' :
+	(process.env.HOST || 'localhost') + ':' + (process.env.PORT || 3000);
+
 module.exports = Object.assign({
 	host: process.env.HOST || 'localhost',
 	port: process.env.PORT,
@@ -35,6 +39,7 @@ module.exports = Object.assign({
 			]
 		}
 	},
+	websiteUrl,
 	auth: {
 		facebook: {
 			clientId: '446558085519275',
@@ -43,7 +48,7 @@ module.exports = Object.assign({
 		quizlet: {
 			clientId: 'U9zGqgKByB',
 			clientSecret: 'gceUm37RfjkgeQw6nJuQKj',
-			redirectUri: 'http://' + (process.env.HOST || 'localhost') + ':' + (process.env.PORT || 3000) + '/loginQuizletSuccess'
+			redirectUri: websiteUrl + '/loginQuizletSuccess'
 		}
 	},
 	mongo: {
